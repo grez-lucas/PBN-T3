@@ -3,7 +3,7 @@
 using namespace std;
 
 class fighter {
-private:
+public:
     string name;
     int health;
     int strength;
