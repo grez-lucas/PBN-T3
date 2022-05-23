@@ -5,21 +5,26 @@
 using namespace std;
 
 
+
+
 void fight::readInputFile(string input_file_name) {
     ifstream input;
 
-    string s;
+    string buffer;
 
     input.open(input_file_name);
 
-    input >> s;
+    getline(input, buffer, ';');
     while(input) {
-
-    }
+    
+        cout << buffer << endl;
+        getline(input, buffer, ';');
+    } 
+        
 
     input.close();
 }
 
 void fight::turn() {
-    
+
 }
