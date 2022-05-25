@@ -2,6 +2,7 @@
 #include<fstream>
 #include<iostream>
 
+
 using namespace std;
 
 
@@ -14,11 +15,13 @@ void fight::readInputFile(string input_file_name) {
 
     input.open(input_file_name);
 
-    getline(input, buffer, ';');
     while(input) {
-    
+        getline(input, buffer, '\"');
         cout << buffer << endl;
-        getline(input, buffer, ';');
+        /*if( buffer == "\"peleador") {
+            cout << "PELEADOR DETECTADO" << endl;
+        } */
+        //getline(input, buffer, '"');
     } 
         
 
