@@ -5,7 +5,7 @@
 using namespace std;
 
 class fight {
-private:
+public:
     fighter fighter1;
     object f1object1;
     object f1object2;
@@ -13,7 +13,6 @@ private:
     object f2object1;
     object f2object2;
     arena picked_arena;
-public:
     void turn();
     void readInputFile(string); //reads input file
 
