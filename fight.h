@@ -10,6 +10,7 @@ public:
     string show();
     void applyBuffs();
     void turn();
+    void beginFight();
     void readInputFile(string); //reads input file
 
     fighter fighter1;

@@ -92,6 +92,7 @@ void fight::turn()
         attackerHitMultiplier = 0;
         cout << attacker.name << " ESTA SIN RESISTENCIA Y NO PUEDE GOLPEAR!"<< endl;
         cout << "Salud restante de " << defender.name << ":\t" << defender.health << endl;
+        this->turnNumber ++;
         return;
     }
 
@@ -114,6 +115,18 @@ void fight::turn()
 
 
     this->turnNumber ++;
+}
+
+void fight::beginFight() {
+    while( this->fighter1.isAlive() && this->fighter2.isAlive() ) {
+        turn();
+    }
+    if( this->fighter1.isAlive() == false) {
+        cout << this->fighter2.name << " HA GANADO!" << endl;
+    }
+    else{
+        cout << this->fighter1.name << " HA GANADO!" << endl;
+    }
 }
 
 void fight::readInputFile(string input_file_name)
