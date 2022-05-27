@@ -3,7 +3,8 @@
 using namespace std;
 
 class object {
-private:
+public:
+    string show();
     string name;
     string type;
     string health;

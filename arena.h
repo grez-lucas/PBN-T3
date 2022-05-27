@@ -3,12 +3,12 @@
 using namespace std;
 
 class arena {
-private:
+public:
     string name;
-    string health;
-    string strength;
-    string speed;
-    string intelligence;
-    string resistance;
+    double health;
+    double strength;
+    double speed;
+    double intelligence;
+    double resistance;
     string legend;
 };

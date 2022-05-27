@@ -4,6 +4,8 @@ using namespace std;
 
 class fighter {
 public:
+    string show();
+    bool isAlive();
     string name;
     int health;
     int strength;
