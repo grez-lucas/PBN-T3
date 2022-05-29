@@ -174,40 +174,45 @@ void fight::turn()
     this->turnNumber ++;
 }
 
-void fight::beginFight() {
+void fight::beginFight()
+{
     int initHealthFighter1 = this->fighter1.health;
     int initHealthFighter2 = this->fighter2.health;
 
-    while( this->fighter1.isAlive() && this->fighter2.isAlive() ) {
+    while (this->fighter1.isAlive() && this->fighter2.isAlive())
+    {
         turn();
-        if( this->fighter1.resistance <= 0 && fighter2.resistance <=0){
-        cout<< "ambos peleadores se han quedado SIN RESISTENCIA!" << endl;
-        return;
-}
-    }
-
-    
-    if( this->fighter1.isAlive() == false) {
-        if(this->fighter1.hasKingOfDead && ( (rand() % 10 + 1) <= 3 ) ){
-            this->fighter1.health = initHealthFighter1 / 2;
-            this->fighter1.intelligence /= 2;
-            this->fighter1.hasKingOfDead = false;
-            cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter1.name << "!!" << endl;
-            beginFight();
+        if (this->fighter1.resistance <= 0 && fighter2.resistance <= 0)
+        {
+            cout << "EMPATE: ambos peleadores se han quedado SIN RESISTENCIA!" << endl;
+            return;
         }
-        cout << this->fighter2.name << " HA GANADO!" << endl;
-        return;
-    }
-    else if( this->fighter2.isAlive() == false){
-        if(this->fighter2.hasKingOfDead && ( (rand() % 10 + 1) <= 3 ) ){
-            this->fighter2.health = initHealthFighter2 / 2;
-            this->fighter2.intelligence /= 2;
-            this->fighter2.hasKingOfDead = false;
-            cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter2.name << "!!" << endl;
-            beginFight();
+        if (this->fighter1.isAlive() == false)
+        {
+            if (this->fighter1.hasKingOfDead && ( (rand() % 10 + 1) <= 3 ) )
+            {
+                this->fighter1.health = initHealthFighter1 / 2;
+                this->fighter1.intelligence /= 2;
+                this->fighter1.hasKingOfDead = false;
+                cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter1.name << "!!" << endl;
+                continue;
+            }
+            cout << this->fighter2.name << " HA GANADO!" << endl;
+            return;
         }
-        cout << this->fighter1.name << " HA GANADO!" << endl;
-        return;
+        else if (this->fighter2.isAlive() == false)
+        {
+            if (this->fighter2.hasKingOfDead && ((rand() % 10 + 1) <= 3))
+            {
+                this->fighter2.health = initHealthFighter2 / 2;
+                this->fighter2.intelligence /= 2;
+                this->fighter2.hasKingOfDead = false;
+                cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter2.name << "!!" << endl;
+                continue;
+            }
+            cout << this->fighter1.name << " HA GANADO!" << endl;
+            return;
+        }
     }
 }
 
