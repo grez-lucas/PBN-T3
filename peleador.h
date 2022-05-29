@@ -4,6 +4,7 @@ using namespace std;
 
 class fighter {
 public:
+    fighter();
     string show();
     bool isAlive();
     string name;
@@ -13,4 +14,6 @@ public:
     int intelligence;
     int resistance;
     string legend;
+    bool hasKingOfDead;
+    bool hasLastBreath;
 };

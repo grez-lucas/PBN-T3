@@ -7,6 +7,7 @@ int main() {
     mainFight.applyBuffs();
     cout << mainFight.show() << endl;
     mainFight.beginFight();
+    //cout << rand() % 1 << endl;
     //cout << mainFight.fighter2.show() << endl;
     //mainFight.turn(mainFight.fighter2, mainFight.fighter1);
     return 0;

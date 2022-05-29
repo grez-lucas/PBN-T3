@@ -25,6 +25,11 @@ string fight::show()
 
 void fight::applyBuffs()
     {
+        //DETERMINE SPECIAL ABILITIES
+        if(rand() % 1) this->fighter1.hasKingOfDead = true;
+        if(rand() % 1) this->fighter1.hasLastBreath = true;
+        if(rand() % 1) this->fighter2.hasKingOfDead = true;
+        if(rand() % 1) this->fighter2.hasLastBreath = true;
         //FIGHTER 1 OBJECT BUFFS
         if(this->f1object1.name != ""){
         this->fighter1.health += stoi(f1object1.health);

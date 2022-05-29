@@ -1,5 +1,10 @@
 #include"peleador.h"
 
+fighter::fighter() {
+    this->hasKingOfDead = false;
+    this->hasLastBreath = false;
+}
+
 string fighter::show(){
     return ("==Peleador==\nNombre: " + this->name
             + "\nSalud: " + to_string(this->health)
