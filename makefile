@@ -21,12 +21,12 @@ fight.o: fight.cpp fight.h
 	$(CC) $(flags) -c fight.cpp -o fight.o
 
 run: $(exe)
-	./$(exe)
+	.\$(exe)
 # ./ for mac
 # .\ for windows
 again: clean $(exe)
 
 clean:
-	rm $(exe) *.o 
+	del $(exe) *.o 
 #rm for mac
 #del for windows

@@ -26,10 +26,11 @@ string fight::show()
 void fight::applyBuffs()
     {
         //DETERMINE SPECIAL ABILITIES
-        if(rand() % 1) this->fighter1.hasKingOfDead = true;
-        if(rand() % 1) this->fighter1.hasLastBreath = true;
-        if(rand() % 1) this->fighter2.hasKingOfDead = true;
-        if(rand() % 1) this->fighter2.hasLastBreath = true;
+        // DEBUG: UNCOMMENTING THIS BLOCK TRIGGERS AN ENDLESS LOOP, FIND OUT WHY!
+        this->fighter1.hasKingOfDead = rand() % 2;
+        this->fighter1.hasLastBreath = rand() % 2;
+        this->fighter2.hasKingOfDead = rand() % 2;
+        this->fighter2.hasLastBreath = rand() % 2; 
         //FIGHTER 1 OBJECT BUFFS
         if(this->f1object1.name != ""){
         this->fighter1.health += stoi(f1object1.health);
@@ -88,25 +89,41 @@ void fight::turn()
         attacker = this->fighter2;
         defender = this->fighter1;
     }
-    cout << "Turno " << this->turnNumber << " COMENZADO!" << endl;
+    cout << "\nTurno " << this->turnNumber << " COMENZADO!" << endl;
 
     //WEAR
     if(attacker.resistance > 0) {
-        attackerHitMultiplier =  (exp( ((-20*this->turnNumber)/ attacker.resistance) ))*(1+ (20*this->turnNumber)/ attacker.resistance) ;
+        attackerHitMultiplier =  (exp( (-20*this->turnNumber)/ attacker.resistance) )*(1+ (20*this->turnNumber)/ attacker.resistance);
+        if(attackerHitMultiplier<=0) attacker.resistance = 0; //So fight doesnt go on for many more rounds
     }else {
         attackerHitMultiplier = 0;
         cout << attacker.name << " ESTA SIN RESISTENCIA Y NO PUEDE GOLPEAR!"<< endl;
         cout << "Salud restante de " << defender.name << ":\t" << defender.health << endl;
         this->turnNumber ++;
+        attacker.resistance --;
+        defender.resistance --;
         return;
     }
+    attacker.resistance --;
+    defender.resistance --;
+
 
     //HIT
     crit = rand() % 3;
+    switch(crit){
+        case 0:
+        cout << "golpe fallado!" << endl;
+        break;
+        case 2:
+        cout << "golpe CRITICO!" << endl;
+        break;
+    }
     hit =  crit * ( (attacker.speed * attacker.strength)/(attacker.speed + attacker.strength) + attacker.intelligence ) * attackerHitMultiplier;
-    
-    cout << attacker.show() << endl;
-    cout << defender.show() << endl;
+    if(hit<0) hit =0;
+
+    //DEBUG:
+    //cout << attacker.show() << endl;
+    //cout << defender.show() << endl;
 
     cout << attacker.name << " GOLPEA A " <<  defender.name << " POR " << hit << " DE DANO!" << endl;
     defender.health -= hit;
@@ -114,8 +131,13 @@ void fight::turn()
     
     if (this->turnNumber % 2 == 0) {
         this->fighter2.health =  defender.health;
+        this->fighter1.resistance =  attacker.resistance;
+        this->fighter2.resistance =  defender.resistance;
     }else {
         this->fighter1.health = defender.health;
+        this->fighter2.resistance =  attacker.resistance;
+        this->fighter1.resistance =  defender.resistance;
+
     }
 
 
@@ -123,14 +145,39 @@ void fight::turn()
 }
 
 void fight::beginFight() {
+    int initHealthFighter1 = this->fighter1.health;
+    int initHealthFighter2 = this->fighter2.health;
+
     while( this->fighter1.isAlive() && this->fighter2.isAlive() ) {
         turn();
+        if( this->fighter1.resistance <= 0 && fighter2.resistance <=0){
+        cout<< "ambos peleadores se han quedado SIN RESISTENCIA!" << endl;
+        return;
+}
     }
+
+    
     if( this->fighter1.isAlive() == false) {
+        if(this->fighter1.hasKingOfDead && ( (rand() % 10 + 1) <= 3 ) ){
+            this->fighter1.health = initHealthFighter1 / 2;
+            this->fighter1.intelligence /= 2;
+            this->fighter1.hasKingOfDead = false;
+            cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter1.name << "!!" << endl;
+            beginFight();
+        }
         cout << this->fighter2.name << " HA GANADO!" << endl;
+        return;
     }
-    else{
+    else if( this->fighter2.isAlive() == false){
+        if(this->fighter2.hasKingOfDead && ( (rand() % 10 + 1) <= 3 ) ){
+            this->fighter2.health = initHealthFighter2 / 2;
+            this->fighter2.intelligence /= 2;
+            this->fighter2.hasKingOfDead = false;
+            cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter2.name << "!!" << endl;
+            beginFight();
+        }
         cout << this->fighter1.name << " HA GANADO!" << endl;
+        return;
     }
 }
 
