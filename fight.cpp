@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// SPECIAL ABILITIES: King of The Dead is declared in beginFight(), while Last Breath is declared in the turn() method
 
 fight::fight() {
     this->turnNumber = 0;
@@ -91,6 +92,30 @@ void fight::turn()
     }
     cout << "\nTurno " << this->turnNumber << " COMENZADO!" << endl;
 
+    //LAST BREATH
+    if(attacker.hasLastBreath
+     && (attacker.health < 10 && attacker.health > 1)
+     && ( rand() % 10 + 1) <= 4)
+     {
+        cout << "ULTIMO ALIENTO ACTIVADO POR " << attacker.name << "!!" << endl;
+        attacker.health = 1;
+        attacker.hasLastBreath = false;
+        attacker.strength *= 0.5;
+        attacker.speed *= 0.5;
+        attacker.resistance *= 0.5;
+    }
+    if(defender.hasLastBreath 
+    && (attacker.health < 10 && attacker.health > 1)
+    && ( rand() % 10 + 1) <= 4)
+    {
+        cout << "ULTIMO ALIENTO ACTIVADO POR " << attacker.name << "!!" << endl;
+        defender.health = 1;
+        defender.hasLastBreath = false;
+        defender.strength *= 0.5;
+        defender.speed *= 0.5;
+        defender.resistance *= 0.5;
+    }
+
     //WEAR
     if(attacker.resistance > 0) {
         attackerHitMultiplier =  (exp( (-20*this->turnNumber)/ attacker.resistance) )*(1+ (20*this->turnNumber)/ attacker.resistance);
@@ -130,14 +155,19 @@ void fight::turn()
     cout << "Vida restante de " << defender.name << ":\t" << defender.health << endl;
     
     if (this->turnNumber % 2 == 0) {
+        this->fighter1.health = attacker.health;
         this->fighter2.health =  defender.health;
         this->fighter1.resistance =  attacker.resistance;
         this->fighter2.resistance =  defender.resistance;
+        this->fighter1.hasLastBreath =  attacker.hasLastBreath;
+        this->fighter2.hasLastBreath =  defender.hasLastBreath;
     }else {
+        this->fighter2.health = attacker.health;
         this->fighter1.health = defender.health;
         this->fighter2.resistance =  attacker.resistance;
         this->fighter1.resistance =  defender.resistance;
-
+        this->fighter2.hasLastBreath =  attacker.hasLastBreath;
+        this->fighter1.hasLastBreath =  defender.hasLastBreath;
     }
 
 
