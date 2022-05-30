@@ -1,0 +1,59 @@
+skull equipado con los objetos: [ Parabellum Chaleco antibalas  ]
+VS
+gary equipado con los objetos: [ Beretta  ]
+===========ATRIBUTOS FINALES===========
+==Peleador==
+Nombre: skull
+Salud: 183
+Fuerza: 75
+Velocidad: 77
+Inteligencia: 30
+Resistencia: 1060
+Leyenda: "" Comandate de las fuerzas imperiales; se le considera el mejor estratega de su epoca"""
+
+==Peleador==
+Nombre: gary
+Salud: 240
+Fuerza: 125
+Velocidad: 55
+Inteligencia: 20
+Resistencia: 970
+Leyenda: En el campo de batalla se le considera una fortaleza andante."""
+
+La arena ha conferido a skull la habilidad "REY DE LOS MUERTOS"
+La arena ha conferido a skull la habilidad "ULTIMO ALIENTO"
+
+Turno 0 COMENZADO!
+golpe CRITICO!
+skull GOLPEA A gary POR 134 DE DANO!
+Vida restante de gary:	106
+
+Turno 1 COMENZADO!
+gary GOLPEA A skull POR 58 DE DANO!
+Vida restante de skull:	125
+
+Turno 2 COMENZADO!
+golpe fallado!
+skull GOLPEA A gary POR 0 DE DANO!
+Vida restante de gary:	106
+
+Turno 3 COMENZADO!
+golpe fallado!
+gary GOLPEA A skull POR 0 DE DANO!
+Vida restante de skull:	125
+
+Turno 4 COMENZADO!
+skull GOLPEA A gary POR 67 DE DANO!
+Vida restante de gary:	39
+
+Turno 5 COMENZADO!
+golpe CRITICO!
+gary GOLPEA A skull POR 116 DE DANO!
+Vida restante de skull:	9
+
+Turno 6 COMENZADO!
+golpe CRITICO!
+skull GOLPEA A gary POR 134 DE DANO!
+Vida restante de gary:	-95
+
+skull HA GANADO!

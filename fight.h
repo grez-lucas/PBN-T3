@@ -1,6 +1,8 @@
 #include"arena.h"
 #include"peleador.h"
 #include"objeto.h"
+#include<fstream>
+
 
 using namespace std;
 
@@ -20,5 +22,6 @@ public:
     object f2object1;
     object f2object2;
     arena picked_arena;
+    ofstream output;
     int turnNumber;
 };

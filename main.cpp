@@ -1,15 +1,30 @@
-#include"fight.h"
-#include<iostream>
+#include "fight.h"
+#include <iostream>
+#include <fstream>
 
-int main() {
+//Specifics: It is assumed that the input file's name wont have any spaces in between
+
+int main(int argc, char **argv)
+{
     fight mainFight;
-    mainFight.readInputFile("data tarea 3.csv");
-    mainFight.applyBuffs();
-    cout << mainFight.fighter1.hasKingOfDead << mainFight.fighter1.hasLastBreath << endl;
-    cout << mainFight.fighter2.hasKingOfDead << mainFight.fighter2.hasLastBreath << endl;
-    cout << mainFight.show() << endl;
-    mainFight.beginFight();
-    //cout << mainFight.fighter2.show() << endl;
-    //mainFight.turn(mainFight.fighter2, mainFight.fighter1);
-    return 0;
+    string fileName;
+
+    if (argc == 2)
+    {
+        fileName = argv[1];
+        cout << "Generando archivo..." << endl;
+        mainFight.output.open("OUTPUT_" + fileName + ".txt");
+        mainFight.readInputFile(fileName + ".csv");
+        mainFight.applyBuffs();
+        mainFight.beginFight();
+        mainFight.output.close();
+        cout << "Programa terminado." << endl;
+        return 0;
+    }
+    return 1;
 }
+
+/* TODO:
+-write output file
+-get argv for file name input
+*/

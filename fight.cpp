@@ -3,14 +3,15 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include<cmath>
+#include <cmath>
 #include <limits>
 
 using namespace std;
 
 // SPECIAL ABILITIES: King of The Dead is declared in beginFight(), while Last Breath is declared in the turn() method
 
-fight::fight() {
+fight::fight()
+{
     this->turnNumber = 0;
 }
 
@@ -25,90 +26,91 @@ string fight::show()
 }
 
 void fight::applyBuffs()
+{
+    // DETERMINE SPECIAL ABILITIES
+    this->fighter1.hasKingOfDead = rand() % 2;
+    this->fighter1.hasLastBreath = rand() % 2;
+    this->fighter2.hasKingOfDead = rand() % 2;
+    this->fighter2.hasLastBreath = rand() % 2;
+    // FIGHTER 1 OBJECT BUFFS
+    if (this->f1object1.name != "")
     {
-        //DETERMINE SPECIAL ABILITIES
-        // DEBUG: UNCOMMENTING THIS BLOCK TRIGGERS AN ENDLESS LOOP, FIND OUT WHY!
-        this->fighter1.hasKingOfDead = rand() % 2;
-        this->fighter1.hasLastBreath = rand() % 2;
-        this->fighter2.hasKingOfDead = rand() % 2;
-        this->fighter2.hasLastBreath = rand() % 2; 
-        //FIGHTER 1 OBJECT BUFFS
-        if(this->f1object1.name != ""){
         this->fighter1.health += stoi(f1object1.health);
         this->fighter1.strength += stoi(f1object1.strength);
         this->fighter1.speed += stoi(f1object1.speed);
         this->fighter1.intelligence += stoi(f1object1.intelligence);
         this->fighter1.resistance += stoi(f1object1.resistance);
-        }
-        if(this->f1object2.name != ""){
+    }
+    if (this->f1object2.name != "")
+    {
         this->fighter1.health += stoi(f1object2.health);
         this->fighter1.strength += stoi(f1object2.strength);
         this->fighter1.speed += stoi(f1object2.speed);
         this->fighter1.intelligence += stoi(f1object2.intelligence);
         this->fighter1.resistance += stoi(f1object2.resistance);
-        }
-        //FIGHTER 2 OBJECT BUFFS
-        if(this->f2object1.name != ""){
+    }
+    // FIGHTER 2 OBJECT BUFFS
+    if (this->f2object1.name != "")
+    {
         this->fighter2.health += stoi(f2object1.health);
         this->fighter2.strength += stoi(f2object1.strength);
         this->fighter2.speed += stoi(f2object1.speed);
         this->fighter2.intelligence += stoi(f2object1.intelligence);
         this->fighter2.resistance += stoi(f2object1.resistance);
-        }
-        if(this->f2object2.name != ""){
+    }
+    if (this->f2object2.name != "")
+    {
         this->fighter2.health += stoi(f2object2.health);
         this->fighter2.strength += stoi(f2object2.strength);
         this->fighter2.speed += stoi(f2object2.speed);
         this->fighter2.intelligence += stoi(f2object2.intelligence);
         this->fighter2.resistance += stoi(f2object2.resistance);
-        }
-        //FIGHTER 1 ARENA BUFFS
-        this->fighter1.health *= this->picked_arena.health;
-        this->fighter1.strength *= this->picked_arena.strength;
-        this->fighter1.speed *= this->picked_arena.speed;
-        this->fighter1.intelligence *= this->picked_arena.intelligence;
-        this->fighter1.resistance *= this->picked_arena.resistance;
-        //FIGHTER 2 ARENA BUFFS
-        this->fighter2.health *= this->picked_arena.health;
-        this->fighter2.strength *= this->picked_arena.strength;
-        this->fighter2.speed *= this->picked_arena.speed;
-        this->fighter2.intelligence *= this->picked_arena.intelligence;
-        this->fighter2.resistance *= this->picked_arena.resistance;
     }
+    // FIGHTER 1 ARENA BUFFS
+    this->fighter1.health *= this->picked_arena.health;
+    this->fighter1.strength *= this->picked_arena.strength;
+    this->fighter1.speed *= this->picked_arena.speed;
+    this->fighter1.intelligence *= this->picked_arena.intelligence;
+    this->fighter1.resistance *= this->picked_arena.resistance;
+    // FIGHTER 2 ARENA BUFFS
+    this->fighter2.health *= this->picked_arena.health;
+    this->fighter2.strength *= this->picked_arena.strength;
+    this->fighter2.speed *= this->picked_arena.speed;
+    this->fighter2.intelligence *= this->picked_arena.intelligence;
+    this->fighter2.resistance *= this->picked_arena.resistance;
+}
 
 void fight::turn()
-{   
+{
     fighter attacker;
     fighter defender;
     int attackerHitMultiplier, crit, hit;
 
-    if (this->turnNumber % 2 == 0) {
-        attacker =  this->fighter1;
-        defender = this-> fighter2;
-
-    }else {
+    if (this->turnNumber % 2 == 0)
+    {
+        attacker = this->fighter1;
+        defender = this->fighter2;
+    }
+    else
+    {
         attacker = this->fighter2;
         defender = this->fighter1;
     }
-    cout << "\nTurno " << this->turnNumber << " COMENZADO!" << endl;
+    this->output << "\nTurno " << this->turnNumber << " COMENZADO!" << endl;
 
-    //LAST BREATH
-    if(attacker.hasLastBreath
-     && (attacker.health < 10 && attacker.health > 1)
-     && ( rand() % 10 + 1) <= 4)
-     {
-        cout << "ULTIMO ALIENTO ACTIVADO POR " << attacker.name << "!!" << endl;
+    // LAST BREATH
+    if (attacker.hasLastBreath && (attacker.health < 10 && attacker.health > 1) && (rand() % 10 + 1) <= 4)
+    {
+        this->output << "ULTIMO ALIENTO ACTIVADO POR " << attacker.name << "!!" << endl;
         attacker.health = 1;
         attacker.hasLastBreath = false;
         attacker.strength *= 0.5;
         attacker.speed *= 0.5;
         attacker.resistance *= 0.5;
     }
-    if(defender.hasLastBreath 
-    && (attacker.health < 10 && attacker.health > 1)
-    && ( rand() % 10 + 1) <= 4)
+    if (defender.hasLastBreath && (attacker.health < 10 && attacker.health > 1) && (rand() % 10 + 1) <= 4)
     {
-        cout << "ULTIMO ALIENTO ACTIVADO POR " << attacker.name << "!!" << endl;
+        this->output << "ULTIMO ALIENTO ACTIVADO POR " << attacker.name << "!!" << endl;
         defender.health = 1;
         defender.hasLastBreath = false;
         defender.strength *= 0.5;
@@ -116,66 +118,84 @@ void fight::turn()
         defender.resistance *= 0.5;
     }
 
-    //WEAR
-    if(attacker.resistance > 0) {
-        attackerHitMultiplier =  (exp( (-20*this->turnNumber)/ attacker.resistance) )*(1+ (20*this->turnNumber)/ attacker.resistance);
-        if(attackerHitMultiplier<=0) attacker.resistance = 0; //So fight doesnt go on for many more rounds
-    }else {
+    // WEAR
+    if (attacker.resistance > 0)
+    {
+        attackerHitMultiplier = (exp((-20 * this->turnNumber) / attacker.resistance)) * (1 + (20 * this->turnNumber) / attacker.resistance);
+        if (attackerHitMultiplier <= 0)
+            attacker.resistance = 0; // So fight doesnt go on for many more rounds
+    }
+    else
+    {
         attackerHitMultiplier = 0;
-        cout << attacker.name << " ESTA SIN RESISTENCIA Y NO PUEDE GOLPEAR!"<< endl;
-        cout << "Salud restante de " << defender.name << ":\t" << defender.health << endl;
-        this->turnNumber ++;
-        attacker.resistance --;
-        defender.resistance --;
+        this->output << attacker.name << " ESTA SIN RESISTENCIA Y NO PUEDE GOLPEAR!" << endl;
+        this->output << "Salud restante de " << defender.name << ":\t" << defender.health << endl;
+        this->turnNumber++;
+        attacker.resistance--;
+        defender.resistance--;
         return;
     }
-    attacker.resistance --;
-    defender.resistance --;
+    attacker.resistance--;
+    defender.resistance--;
 
-
-    //HIT
+    // HIT
     crit = rand() % 3;
-    switch(crit){
-        case 0:
-        cout << "golpe fallado!" << endl;
+    switch (crit)
+    {
+    case 0:
+        this->output << "golpe fallado!" << endl;
         break;
-        case 2:
-        cout << "golpe CRITICO!" << endl;
+    case 2:
+        this->output << "golpe CRITICO!" << endl;
         break;
     }
-    hit =  crit * ( (attacker.speed * attacker.strength)/(attacker.speed + attacker.strength) + attacker.intelligence ) * attackerHitMultiplier;
-    if(hit<0) hit =0;
+    hit = crit * ((attacker.speed * attacker.strength) / (attacker.speed + attacker.strength) + attacker.intelligence) * attackerHitMultiplier;
+    if (hit < 0)
+        hit = 0;
 
-    //DEBUG:
-    //cout << attacker.show() << endl;
-    //cout << defender.show() << endl;
-
-    cout << attacker.name << " GOLPEA A " <<  defender.name << " POR " << hit << " DE DANO!" << endl;
+    this->output << attacker.name << " GOLPEA A " << defender.name << " POR " << hit << " DE DANO!" << endl;
     defender.health -= hit;
-    cout << "Vida restante de " << defender.name << ":\t" << defender.health << endl;
-    
-    if (this->turnNumber % 2 == 0) {
+    this->output << "Vida restante de " << defender.name << ":\t" << defender.health << endl;
+
+    if (this->turnNumber % 2 == 0)
+    {
         this->fighter1.health = attacker.health;
-        this->fighter2.health =  defender.health;
-        this->fighter1.resistance =  attacker.resistance;
-        this->fighter2.resistance =  defender.resistance;
-        this->fighter1.hasLastBreath =  attacker.hasLastBreath;
-        this->fighter2.hasLastBreath =  defender.hasLastBreath;
-    }else {
+        this->fighter2.health = defender.health;
+        this->fighter1.resistance = attacker.resistance;
+        this->fighter2.resistance = defender.resistance;
+        this->fighter1.hasLastBreath = attacker.hasLastBreath;
+        this->fighter2.hasLastBreath = defender.hasLastBreath;
+    }
+    else
+    {
         this->fighter2.health = attacker.health;
         this->fighter1.health = defender.health;
-        this->fighter2.resistance =  attacker.resistance;
-        this->fighter1.resistance =  defender.resistance;
-        this->fighter2.hasLastBreath =  attacker.hasLastBreath;
-        this->fighter1.hasLastBreath =  defender.hasLastBreath;
+        this->fighter2.resistance = attacker.resistance;
+        this->fighter1.resistance = defender.resistance;
+        this->fighter2.hasLastBreath = attacker.hasLastBreath;
+        this->fighter1.hasLastBreath = defender.hasLastBreath;
     }
 
-
-    this->turnNumber ++;
+    this->turnNumber++;
 }
 
 void fight::beginFight()
 {
+    this->output << this->fighter1.name << " equipado con los objetos: [ " << this->f1object1.name << " " << this->f1object2.name << " ]" << endl;
+    this->output << "VS" << endl;
+    this->output << this->fighter2.name << " equipado con los objetos: [ " << this->f2object1.name << " " << this->f2object2.name << " ]" << endl;
+    this->output << "===========ATRIBUTOS FINALES===========" << endl;
+    this->output << this->fighter1.show() << endl;
+    this->output << this->fighter2.show() << endl;
+    if (this->fighter1.hasKingOfDead)
+        this->output << "La arena ha conferido a " << this->fighter1.name << " la habilidad \"REY DE LOS MUERTOS\"" << endl;
+    if (this->fighter1.hasLastBreath)
+        this->output << "La arena ha conferido a " << this->fighter1.name << " la habilidad \"ULTIMO ALIENTO\"" << endl;
+    if (this->fighter2.hasKingOfDead)
+        this->output << "La arena ha conferido a " << this->fighter2.name << " la habilidad \"REY DE LOS MUERTOS\"" << endl;
+    if (this->fighter2.hasLastBreath)
+        this->output << "La arena ha conferido a " << this->fighter2.name << " la habilidad \"ULTIMO ALIENTO\"" << endl;
+
     int initHealthFighter1 = this->fighter1.health;
     int initHealthFighter2 = this->fighter2.health;
 
@@ -184,20 +204,20 @@ void fight::beginFight()
         turn();
         if (this->fighter1.resistance <= 0 && fighter2.resistance <= 0)
         {
-            cout << "EMPATE: ambos peleadores se han quedado SIN RESISTENCIA!" << endl;
+            this->output << "\nEMPATE: ambos peleadores se han quedado SIN RESISTENCIA!" << endl;
             return;
         }
         if (this->fighter1.isAlive() == false)
         {
-            if (this->fighter1.hasKingOfDead && ( (rand() % 10 + 1) <= 3 ) )
+            if (this->fighter1.hasKingOfDead && ((rand() % 10 + 1) <= 3))
             {
                 this->fighter1.health = initHealthFighter1 / 2;
                 this->fighter1.intelligence /= 2;
                 this->fighter1.hasKingOfDead = false;
-                cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter1.name << "!!" << endl;
+                this->output << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter1.name << "!!" << endl;
                 continue;
             }
-            cout << this->fighter2.name << " HA GANADO!" << endl;
+            this->output <<"\n"<< this->fighter2.name << " HA GANADO!" << endl;
             return;
         }
         else if (this->fighter2.isAlive() == false)
@@ -207,10 +227,10 @@ void fight::beginFight()
                 this->fighter2.health = initHealthFighter2 / 2;
                 this->fighter2.intelligence /= 2;
                 this->fighter2.hasKingOfDead = false;
-                cout << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter2.name << "!!" << endl;
+                this->output << "REY DE LOS MUERTOS ACTIVADO POR " << this->fighter2.name << "!!" << endl;
                 continue;
             }
-            cout << this->fighter1.name << " HA GANADO!" << endl;
+            this->output <<"\n"<< this->fighter1.name << " HA GANADO!" << endl;
             return;
         }
     }
@@ -260,7 +280,6 @@ void fight::readInputFile(string input_file_name)
             }
 
             row.push_back(word);
-            // cout << word << endl;
             counter++;
         }
         // SAVE FIGHTER BLOCK
@@ -307,7 +326,7 @@ void fight::readInputFile(string input_file_name)
                     this->f1object1.intelligence = row[6];
                     this->f1object1.resistance = row[7];
                     this->f1object1.legend = row[8];
-                    firstObjectFlag = false; // TODO: Think of what happens if second object is NULL and there's more objects later
+                    firstObjectFlag = false;
                 }
                 else
                 {
@@ -361,23 +380,12 @@ void fight::readInputFile(string input_file_name)
         }
         else
         {
-            // DEBUG
             cout << "Formato de archivo incorrecto, porfavor reescribalo e intente nuevamente" << endl;
             break;
         }
 
-        /*for (auto i = row.begin(); i != row.end(); ++i) cout << *i << endl;
-        cout << endl;*/
         getline(input, line);
     }
-    // DEBUG:
-    //cout << this->fighter1.show() << endl;
-    //cout << this->fighter2.show() << endl;
-    // cout << this-> to_string(f2object2.name == "") << endl;
-    // cout << "Peleador 1 objetos:\n"<<this->f1object1.name << endl;
-    // cout << this->f1object2.name << endl;
-    // cout << "Peleador 2 objetos:\n"<<this->f2object1.name << endl;
-    // cout << this->f2object2.name << endl;
 
     input.close();
 }
