@@ -23,8 +23,3 @@ int main(int argc, char **argv)
     }
     return 1;
 }
-
-/* TODO:
--write output file
--get argv for file name input
-*/
